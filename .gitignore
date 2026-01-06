@@ -12,6 +12,9 @@ node_modules/
 dist/
 .vite/
 
+# TypeScript incremental build output
+frontend/tsconfig.tsbuildinfo
+
 # Python
 __pycache__/
 *.py[cod]
