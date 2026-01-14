@@ -64,5 +64,23 @@ export const members: Member[]=[
     email:"susan.johnson@gmai.com",
     image: susanImg
     
+  },{
+    id: 5,
+    name: "Hannah",
+    team: "core",
+    role: "co-convener",
+    linkedin:"https://www.linkedin.com/in/geetanshi-malik-b12221229/",
+    email:"susan.johnson@gmai.com",
+    image: susanImg
+    
+  },{id: 6,
+    name: "Louise",
+    team: "events",
+    role: "head",
+    linkedin:"https://www.linkedin.com/in/geetanshi-malik-b12221229/",
+    email:"susan.johnson@gmai.com",
+    image: susanImg
   }
+    
+
 ];

@@ -32,7 +32,7 @@ export default function TeamTabs({ onTabChange }: TeamTabsProps) {
             key={tab.id}
             onClick={() => handleClick(tab.id)}
             className={`
-              px-4 py-2 rounded-full whitespace-nowrap transition-colors text-sm md:text-base
+              px-4 py-2 rounded-full whitespace-nowrap transition-colors text-sm md:text-base md:px-5 md:py-2.5 md:text-lg
         ${activeTab===tab.id ? tab.activeColor : "bg-[#C0C0C0] text-gray-800"}
             `}
           >

@@ -39,6 +39,8 @@ function MemberCard({ member, activeTab }:MemberCardProps) {
   return (
     
   <>
+
+  
     <div className="h-[420px]
     
       relative
@@ -55,7 +57,7 @@ function MemberCard({ member, activeTab }:MemberCardProps) {
       flex-shrink-0
       overflow-hidden
       ">
-      
+
 
       <div className="relative z-10 flex flex-col items-center text-center">
       <h3 className="text-2xl font-kdam text-transform: uppercase">{member.name}</h3>
@@ -68,6 +70,12 @@ function MemberCard({ member, activeTab }:MemberCardProps) {
       {member.role}
     </p>
 
+  <div>
+    {activeTab==="all" && <p  className={`
+        font-kdam transition-colors text-transform: uppercase
+        ${activeTab==="all"? teamColors[member.team] : "text-gray-500"}
+      `}> {member.team} </p>}
+  </div>
 
     {/* Icons row */}
       <div className="flex gap-5 mt-4">
@@ -108,7 +116,7 @@ function MemberCard({ member, activeTab }:MemberCardProps) {
             bottom-0
             left-1/2
             -translate-x-1/2
-            w-[90%]
+            w-[80%]
             object-contain
             
             pointer-events-none
