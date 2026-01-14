@@ -1,262 +1,215 @@
-import { useMemo, useState } from 'react'
-import NavBar from '../components/NavBar'
+import React, { useState } from 'react';
+import NavBar from '../components/NavBar';
 
-type SportKey = 'box-cricket' | 'futsal' | 'basketball' | 'volleyball' | 'table-tennis'
+// --- Type Definitions ---
 
-type UpcomingMatch = {
-  label: string
-  timeLabel: string
+interface TeamStats {
+  score: string;
+  detail: string;
 }
 
-type LiveMatch = {
-  label: string
-  left: { score: string; detail: string }
-  right: { score: string; detail: string }
+interface NowPlaying {
+  title: string;
+  teamA: TeamStats;
+  teamB: TeamStats;
+  venue: string;
 }
 
-type SportViewModel = {
-  key: SportKey
-  name: string
-  icon: string
-  live: LiveMatch
-  upcoming: UpcomingMatch[]
+interface NextMatch {
+  time: string;
+  match: string;
 }
 
-export default function LiveScoresPage() {
-  const sports: SportViewModel[] = useMemo(
-    () => [
-      {
-        key: 'box-cricket',
-        name: 'Box Cricket',
-        icon: '🏏',
-        live: {
-          label: 'B2 v/s B4',
-          left: { score: '127/9', detail: '60 balls' },
-          right: { score: '24/2', detail: '17 balls' }
-        },
-        upcoming: [
-          { label: 'B4 v/s B10', timeLabel: '6 pm, 28 Feb' },
-          { label: 'B8 v/s B5', timeLabel: '6 pm, 28 Feb' }
-        ]
-      },
-      {
-        key: 'futsal',
-        name: 'Futsal',
-        icon: '⚽',
-        live: {
-          label: 'B1 v/s B3',
-          left: { score: '2', detail: 'FT' },
-          right: { score: '1', detail: 'FT' }
-        },
-        upcoming: [
-          { label: 'B2 v/s B4', timeLabel: '5 pm, 28 Feb' },
-          { label: 'B6 v/s B9', timeLabel: '7 pm, 28 Feb' }
-        ]
-      },
-      {
-        key: 'basketball',
-        name: 'Basketball',
-        icon: '🏀',
-        live: {
-          label: 'B2 v/s B7',
-          left: { score: '48', detail: 'Q3' },
-          right: { score: '41', detail: 'Q3' }
-        },
-        upcoming: [
-          { label: 'B4 v/s B8', timeLabel: '6 pm, 28 Feb' },
-          { label: 'B1 v/s B5', timeLabel: '7 pm, 28 Feb' }
-        ]
-      },
-      {
-        key: 'volleyball',
-        name: 'Volleyball',
-        icon: '🏐',
-        live: {
-          label: 'B3 v/s B6',
-          left: { score: '1', detail: 'Sets' },
-          right: { score: '0', detail: 'Sets' }
-        },
-        upcoming: [
-          { label: 'B2 v/s B5', timeLabel: '6 pm, 28 Feb' },
-          { label: 'B7 v/s B10', timeLabel: '7 pm, 28 Feb' }
-        ]
-      },
-      {
-        key: 'table-tennis',
-        name: 'Table Tennis',
-        icon: '🏓',
-        live: {
-          label: 'B8 v/s B9',
-          left: { score: '10', detail: 'Game 2' },
-          right: { score: '7', detail: 'Game 2' }
-        },
-        upcoming: [
-          { label: 'B1 v/s B4', timeLabel: '6 pm, 28 Feb' },
-          { label: 'B2 v/s B6', timeLabel: '7 pm, 28 Feb' }
-        ]
-      }
-    ],
-    []
-  )
+interface SportData {
+  title: string;
+  icon: string;
+  now: NowPlaying;
+  next: NextMatch[];
+}
 
-  const [activeSportKey, setActiveSportKey] = useState<SportKey>('box-cricket')
-  const activeSport = sports.find((s) => s.key === activeSportKey) ?? sports[0]
+interface MockDataMap {
+  [key: string]: SportData;
+}
+
+// --- Data (All 11 Sports) ---
+
+const MOCK_DATA: MockDataMap = {
+  boxcricket: {
+    title: 'Box Cricket',
+    icon: '🏏',
+    now: { title: 'B2 v/s B4', teamA: { score: '127/9', detail: '60 balls' }, teamB: { score: '24/2', detail: '18 balls' }, venue: 'Bluespring Turf | 10 Overs' },
+    next: [{ time: '10:00', match: 'B8 v/s B10' }, { time: '12:00', match: 'B6 v/s B3' }, { time: '12:00', match: 'B6 v/s B10' }]
+  },
+  futsal: {
+    title: 'Futsal',
+    icon: '⚽',
+    now: { title: 'A1 v/s A3', teamA: { score: '2', detail: 'HT' }, teamB: { score: '1', detail: 'HT' }, venue: 'Courtyard 1 | 2x15m' },
+    next: [{ time: '10:30', match: 'A2 v/s A4' }, { time: '11:30', match: 'A5 v/s A6' }, { time: '12:30', match: 'A7 v/s A8' }]
+  },
+  basketball: {
+    title: 'Basketball',
+    icon: '🏀',
+    now: { title: 'C2 v/s C4', teamA: { score: '48', detail: 'Q3 02:12' }, teamB: { score: '39', detail: 'Q3 02:12' }, venue: 'Main Court | 4Q' },
+    next: [{ time: '11:00', match: 'C1 v/s C3' }, { time: '12:00', match: 'C5 v/s C6' }, { time: '13:00', match: 'C7 v/s C8' }]
+  },
+  volleyball: {
+    title: 'Volleyball',
+    icon: '🏐',
+    now: { title: 'D2 v/s D5', teamA: { score: '1', detail: 'Set 3' }, teamB: { score: '1', detail: 'Set 3' }, venue: 'Ground 2 | Bo3' },
+    next: [{ time: '10:00', match: 'D1 v/s D3' }, { time: '11:30', match: 'D4 v/s D6' }, { time: '13:00', match: 'D7 v/s D8' }]
+  },
+  tabletennis: {
+    title: 'Table Tennis',
+    icon: '🏓',
+    now: { title: 'TT1 v/s TT3', teamA: { score: '2', detail: 'Game 4' }, teamB: { score: '1', detail: 'Game 4' }, venue: 'Hall A | Bo5' },
+    next: [{ time: '10:00', match: 'TT2 v/s TT4' }, { time: '11:00', match: 'TT5 v/s TT6' }, { time: '12:00', match: 'TT7 v/s TT8' }]
+  },
+  powerlifting: {
+    title: 'Power Lifting',
+    icon: '🏋️',
+    now: { title: 'WL1 v/s WL3', teamA: { score: '145kg', detail: 'Snatch' }, teamB: { score: '138kg', detail: 'Snatch' }, venue: "Gym Hall | Men's 73kg" },
+    next: [{ time: '10:00', match: 'WL2 v/s WL4' }, { time: '11:00', match: 'WL5 v/s WL6' }, { time: '12:00', match: 'WL7 v/s WL8' }]
+  },
+  pool: {
+    title: 'Pool',
+    icon: '🎱',
+    now: { title: 'PL1 v/s PL3', teamA: { score: '3', detail: 'Frame 4' }, teamB: { score: '2', detail: 'Frame 4' }, venue: 'Recreation Hall | Bo5' },
+    next: [{ time: '10:00', match: 'PL2 v/s PL4' }, { time: '11:00', match: 'PL5 v/s PL6' }, { time: '12:00', match: 'PL7 v/s WL8' }]
+  },
+  badminton: {
+    title: 'Badminton',
+    icon: '🏸',
+    now: { title: 'BD1 v/s BD3', teamA: { score: '1', detail: 'Set 2' }, teamB: { score: '0', detail: 'Set 2' }, venue: 'Court 1 | Bo3' },
+    next: [{ time: '10:00', match: 'BD2 v/s BD4' }, { time: '11:00', match: 'BD5 v/s BD6' }, { time: '12:00', match: 'BD7 v/s BD8' }]
+  },
+  squash: {
+    title: 'Squash',
+    icon: '🎾',
+    now: { title: 'SQ1 v/s SQ3', teamA: { score: '2', detail: 'Game 4' }, teamB: { score: '1', detail: 'Game 4' }, venue: 'Squash Court | Bo5' },
+    next: [{ time: '10:00', match: 'SQ2 v/s SQ4' }, { time: '11:00', match: 'SQ5 v/s SQ6' }, { time: '12:00', match: 'SQ7 v/s SQ8' }]
+  },
+  tugofwar: {
+    title: 'Tug of War',
+    icon: '🪢',
+    now: { title: 'TW1 v/s TW3', teamA: { score: '1', detail: 'Round 2' }, teamB: { score: '0', detail: 'Round 2' }, venue: 'Main Ground | Bo3' },
+    next: [{ time: '10:00', match: 'TW2 v/s TW4' }, { time: '11:00', match: 'TW5 v/s TW6' }, { time: '12:00', match: 'TW7 v/s TW8' }]
+  },
+  chess: {
+    title: 'Chess',
+    icon: '♟️',
+    now: { title: 'CH1 v/s CH3', teamA: { score: '1', detail: 'Move 25' }, teamB: { score: '0', detail: 'Move 25' }, venue: 'Hall B | Classical' },
+    next: [{ time: '10:00', match: 'CH2 v/s CH4' }, { time: '11:00', match: 'CH5 v/s CH6' }, { time: '12:00', match: 'CH7 v/s CH8' }]
+  }
+};
+
+const LiveScores: React.FC = () => {
+  const [activeSport, setActiveSport] = useState<string>('boxcricket');
+  const [isAnimating, setIsAnimating] = useState<boolean>(false);
+
+  const data = MOCK_DATA[activeSport] || MOCK_DATA.boxcricket;
+  const bgImage = "WhatsApp Image 2026-01-13 at 11.38.30 PM.jpeg";
+
+  const handleSportChange = (key: string): void => {
+    setIsAnimating(true);
+    setActiveSport(key);
+    setTimeout(() => setIsAnimating(false), 300);
+  };
 
   return (
-    <div data-page="live-scores" className="min-h-[100svh] overflow-x-hidden bg-amber-50">
-      <header className="sticky top-0 z-10 bg-amber-50/90 pt-[env(safe-area-inset-top)] backdrop-blur">
-        <div className="mx-auto max-w-md px-4 pt-4">
-          <h1 className="text-center text-2xl font-semibold tracking-wide text-stone-800">
-            GHS CARNIVAL
-          </h1>
+    <div className="min-h-screen bg-fixed font-poppins text-gray-900 overflow-x-hidden" 
+         style={{ 
+           backgroundImage: `url('${bgImage}')`,
+           backgroundSize: 'cover',
+           backgroundPosition: 'center',
+           backgroundRepeat: 'no-repeat',
+         }}>
+      
+      {/* Mobile-Responsive Container */}
+      <div className="w-full max-w-full md:max-w-[420px] mx-auto flex flex-col min-h-screen bg-white/20 backdrop-blur-md shadow-2xl">
+        
+        <header className="px-4 py-6 pb-2">
+          <div className="flex items-center">
+            <img src="ghs carnival.png" alt="GHS CARNIVAL" className="h-9 w-auto max-w-full" />
+          </div>
+        </header>
+
+        {/* Scrollable Sports Tabs */}
+        <div className="flex gap-[12px] overflow-x-auto px-4 py-3 no-scrollbar touch-pan-x">
+          {Object.keys(MOCK_DATA).map((key) => (
+            <button
+              key={key}
+              onClick={() => handleSportChange(key)}
+              className={`flex-shrink-0 flex flex-col items-center justify-center w-[85px] h-[85px] rounded-xl border transition-all duration-300 
+                ${activeSport === key 
+                  ? 'bg-[#ffe9df] border-[#fdcfba] shadow-[0_0_0_4px_rgba(255,122,61,0.25)] scale-105' 
+                  : 'bg-white/70 border-white/50 hover:bg-white/90'}`}
+            >
+              <span className="text-2xl mb-1">{MOCK_DATA[key].icon}</span>
+              <span className="text-[10px] font-bold text-center leading-tight uppercase">
+                {MOCK_DATA[key].title}
+              </span>
+            </button>
+          ))}
         </div>
 
-        <div className="mx-auto max-w-md px-0 pb-2 pt-3">
-          <div className="bg-gradient-to-b from-amber-50 to-amber-100/60">
-            <div className="flex gap-2.5 overflow-x-auto overscroll-x-contain px-4 py-2.5 snap-x snap-mandatory">
-            {sports.map((sport) => {
-              const isActive = sport.key === activeSportKey
-              return (
-                <button
-                  key={sport.key}
-                  type="button"
-                  onClick={() => setActiveSportKey(sport.key)}
-                  className={
-                    'shrink-0 snap-start rounded-xl px-1 py-1 transition outline-none focus:outline-none focus-visible:outline-none ' +
-                    (isActive
-                      ? 'bg-white/70'
-                      : 'bg-transparent hover:bg-white/50')
-                  }
-                  aria-pressed={isActive}
-                >
-                  <div className="flex w-16 flex-col items-center">
-                    <div
-                      className={
-                        'flex h-11 w-11 items-center justify-center rounded-full ' +
-                        (isActive
-                          ? 'bg-white'
-                          : 'bg-amber-50')
-                      }
-                      aria-hidden="true"
-                    >
-                      <span className="text-xl leading-none">{sport.icon}</span>
-                    </div>
-                    <div className="mt-1.5 text-center text-[11px] font-semibold leading-tight text-stone-900">
-                      {sport.name}
-                    </div>
-                    <div className="mt-1.5 h-1 w-8 rounded-full bg-transparent">
-                      <div
-                        className={
-                          'h-full w-full rounded-full ' +
-                          (isActive ? 'bg-stone-900/70' : 'bg-transparent')
-                        }
-                      />
-                    </div>
-                  </div>
-                </button>
-              )
-            })}
-            </div>
-          </div>
-        </div>
-      </header>
-
-      <main className="mx-auto max-w-md px-4 pb-[calc(2.5rem+env(safe-area-inset-bottom))]">
-        <section className="rounded-2xl border border-amber-200 bg-white p-3 shadow-sm">
-          <h2 className="text-center text-2xl font-bold text-stone-900">{activeSport.name}</h2>
-
-          <div className="mt-3 rounded-2xl border border-amber-300 bg-gradient-to-b from-amber-100 to-orange-200 p-3 shadow">
-            <div className="flex items-center justify-between gap-3">
-              <div className="text-xs font-semibold text-stone-900">
-                Now Playing : <span className="font-bold">{activeSport.live.label}</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <span className="h-2.5 w-2.5 rounded-full bg-red-500" aria-hidden="true" />
-                <span className="sr-only">Live</span>
-              </div>
-            </div>
-
-            <div className="mt-3 grid grid-cols-[1fr_auto_1fr] items-center">
-              <div className="text-center">
-                <div className="text-3xl font-extrabold leading-none tracking-tight text-stone-950">
-                  {activeSport.live.left.score}
-                </div>
-                <div className="mt-1.5 text-xs font-semibold text-stone-800">
-                  {activeSport.live.left.detail}
-                </div>
-              </div>
-
-              <div className="flex justify-center" aria-hidden="true">
-                <div className="h-14 w-px bg-stone-700/40" />
-              </div>
-
-              <div className="text-center">
-                <div className="text-3xl font-extrabold leading-none tracking-tight text-stone-950">
-                  {activeSport.live.right.score}
-                </div>
-                <div className="mt-1.5 text-xs font-semibold text-stone-800">
-                  {activeSport.live.right.detail}
-                </div>
-              </div>
-            </div>
+        <main className="flex-1 px-4 py-4 pb-12">
+          <div className="text-[12px] font-bold text-gray-600 uppercase tracking-widest mb-4">
+            Now Playing: {data.title}
           </div>
 
-          <h3 className="mt-4 text-xl font-extrabold text-stone-900">Up Next</h3>
-          <div className="mt-2.5 grid grid-cols-2 gap-2.5">
-            {activeSport.upcoming.slice(0, 2).map((m) => (
-              <div
-                key={m.label}
-                className="rounded-2xl border border-amber-300 bg-amber-50 p-2.5 text-center shadow"
-              >
-                <div className="text-base font-extrabold leading-tight text-stone-950">{m.label}</div>
-                <div className="mt-1 text-xs font-semibold text-stone-700">{m.timeLabel}</div>
+          {/* Now Playing Card */}
+          <section 
+            className={`relative overflow-hidden rounded-[24px] border border-white/40 p-5 transition-opacity duration-300 shadow-xl
+            ${isAnimating ? 'opacity-50' : 'opacity-100'}`}
+            style={{ 
+              backgroundImage: `linear-gradient(135deg, rgba(255,122,61,0.15), rgba(155,92,246,0.15)), url('${bgImage}')`,
+              backgroundSize: 'cover',
+              backgroundPosition: 'center'
+            }}
+          >
+            {/* Glossy Glass Effect */}
+            <div className="absolute inset-0 bg-white/75 backdrop-blur-md" />
+            
+            <div className="relative z-10">
+              <div className="flex items-center gap-2 text-[12px] text-gray-500 font-semibold mb-4">
+                <span className="w-2.5 h-2.5 bg-red-600 rounded-full shadow-[0_0_0_4px_rgba(220,38,38,0.2)] animate-pulse" />
+                <span>{data.now.title}</span>
+              </div>
+
+              <div className="grid grid-cols-2 gap-3 items-center">
+                <div className="bg-white/90 rounded-2xl p-4 text-center shadow-sm border border-white">
+                  <div className="text-[38px] md:text-[42px] font-black leading-none text-gray-800">{data.now.teamA.score}</div>
+                  <div className="text-[11px] text-orange-600 mt-2 font-bold uppercase tracking-tight">{data.now.teamA.detail}</div>
+                </div>
+                <div className="bg-white/90 rounded-2xl p-4 text-center shadow-sm border border-white">
+                  <div className="text-[38px] md:text-[42px] font-black leading-none text-gray-800">{data.now.teamB.score}</div>
+                  <div className="text-[11px] text-orange-600 mt-2 font-bold uppercase tracking-tight">{data.now.teamB.detail}</div>
+                </div>
+              </div>
+
+              <div className="text-[12px] text-gray-600 mt-5 flex items-center gap-2 font-medium bg-white/50 w-fit px-3 py-1 rounded-full border border-white/40">
+                📍 {data.now.venue}
+              </div>
+            </div>
+          </section>
+
+          <div className="text-[12px] font-bold text-gray-600 uppercase tracking-widest mt-8 mb-4">Up Next</div>
+          
+          {/* Next Matches Grid */}
+          <div className="grid grid-cols-3 gap-3">
+            {data.next.map((match, idx) => (
+              <div key={idx} className="bg-white/80 backdrop-blur-sm border border-white/50 p-3 rounded-2xl hover:-translate-y-1 transition-all shadow-sm group">
+                <div className="text-[12px] font-bold text-orange-600 group-hover:text-orange-700">{match.time}</div>
+                <div className="text-[11px] text-gray-700 font-semibold leading-tight mt-1">{match.match}</div>
               </div>
             ))}
           </div>
-        </section>
+        </main>
+      </div>
 
-        <section className="mt-4 rounded-2xl border border-amber-200 bg-white p-3 shadow-sm">
-          <h3 className="text-xl font-extrabold text-stone-900">Quick Links</h3>
-
-          <div className="mt-3 space-y-1">
-            <a
-              href="#"
-              className="-mx-2 flex min-h-10 items-center gap-2.5 px-2 py-1.5 text-stone-900"
-              aria-label="GHS Carnival's Official Page"
-            >
-              <span className="text-xl" aria-hidden="true">
-                📷
-              </span>
-              <span className="text-base font-bold underline underline-offset-4">
-                GHS CARNIVAL&apos;S Official Page
-              </span>
-            </a>
-
-            <a href="/guidelines" className="-mx-2 flex min-h-10 items-center gap-2.5 px-2 py-1.5 text-stone-900">
-              <span className="text-xl" aria-hidden="true">
-                🌐
-              </span>
-              <span className="text-base font-bold underline underline-offset-4">
-                Guidelines / Rulebook
-              </span>
-            </a>
-
-            <a
-              href="#"
-              className="-mx-2 flex min-h-10 items-center gap-2.5 px-2 py-1.5 text-stone-900"
-              aria-label="Cultural Events Updates"
-            >
-              <span className="text-xl" aria-hidden="true">
-                🕒
-              </span>
-              <span className="text-base font-bold underline underline-offset-4">
-                Cultural Events Updates
-              </span>
-            </a>
-          </div>
-        </section>
-      </main>
-      <NavBar />
+      <NavBar/>
     </div>
-  )
-}
+  );
+};
+
+export default LiveScores;
