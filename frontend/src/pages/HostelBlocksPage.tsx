@@ -15,6 +15,20 @@ const blocks = [
   "B11",
   "B12",
 ];
+const blockData: Record<string, { firstName: string; lastName: string }> = {
+  B1: { firstName: "JAI", lastName: "RATNA" },
+  B2: { firstName: "ARJUN", lastName: "SINGH" },
+  B3: { firstName: "ROHAN", lastName: "MEHTA" },
+  B4: { firstName: "ADITYA", lastName: "VERMA" },
+  B5: { firstName: "KARAN", lastName: "SHARMA" },
+  B6: { firstName: "MOHIT", lastName: "GUPTA" },
+  B7: { firstName: "AMAN", lastName: "JAIN" },
+  B8: { firstName: "RAHUL", lastName: "AGRAWAL" },
+  B9: { firstName: "NIKHIL", lastName: "KHANNA" },
+  B10: { firstName: "SIDDHARTH", lastName: "MALIK" },
+  B11: { firstName: "ANMOL", lastName: "BANSAL" },
+  B12: { firstName: "DEV", lastName: "PATEL" },
+};
 
 export default function HostelBlocksPage(): JSX.Element {
   const [openBlock, setOpenBlock] = useState<string | null>(null);
@@ -38,9 +52,9 @@ export default function HostelBlocksPage(): JSX.Element {
 
         <p
           className="
-            mt-2 mb-2 text-lg font-medium tracking-[0.3em] text-center
+            mt-2 mb-2 text-xl font-medium tracking-[0.3em] text-center
             bg-gradient-to-r from-[#e6b980] to-[#c78bf4]
-            bg-clip-text text-transparent
+            bg-clip-text text-transparent font-heading
           "
         >
           BLOCK CAPTAINS
@@ -62,7 +76,7 @@ export default function HostelBlocksPage(): JSX.Element {
             return (
               <div
                 key={block}
-                className={`rounded-3xl transition-all duration-500 min-h-[90px] ease-in-out
+                className={`rounded-3xl transition-all duration-1000 min-h-[90px] ease-in-out
                   ${
                     isOpen
                       ? "bg-[#fbf8f3] shadow-lg shadow-[#e7d4b1]/40"
@@ -74,18 +88,18 @@ export default function HostelBlocksPage(): JSX.Element {
                   className="w-full flex justify-between px-4 py-3 text-left"
                 >
                   <span
-                    className={`font-carnival transition-all duration-500
+                    className={`font-carnival transition-all duration-500 ease-in
                       ${
                         isOpen
-                          ? "text-3xl font-semibold text-[#3f352a] translate-y-3"
-                          : "text-3xl font-medium text-[#7a7267]"
+                          ? "text-2xl text-[#3f352a] translate-y-3"
+                          : "text-3xl font-medium text-[#7a7267] font-heading"
                       }`}
                   >
                     {block}
                   </span>
 
                   <span
-                    className={`transition-transform duration-500 text-[#7a7267]
+                    className={`transition-transform duration-1000 text-[#7a7267]
                       ${isOpen ? "rotate-180" : ""}`}
                   >
                     ⌄
@@ -98,11 +112,11 @@ export default function HostelBlocksPage(): JSX.Element {
     ${isOpen ? "max-h-40 opacity-100 pb-4" : "max-h-0 opacity-0 pb-0"}
   `}
                 >
-                  <p className="font-carnival text-[22px] leading-tight text-[#d18b47]">
-                    NAME
+                  <p className="font-body text-[18px] leading-tight text-[#d18b47]">
+                    {blockData[block].firstName}
                   </p>
-                  <p className="font-carnival text-[22px] leading-tight text-[#d18b47]">
-                    SURNAME
+                  <p className="font-body text-[18px] leading-tight text-[#d18b47]">
+                    {blockData[block].lastName}
                   </p>
                 </div>
               </div>

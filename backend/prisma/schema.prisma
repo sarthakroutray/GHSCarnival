@@ -21,9 +21,10 @@ enum UserRole {
 }
 
 model User {
-  id        String   @id @default(cuid())
+  id        String   @id
   email     String   @unique
   role      UserRole @default(SPORT_ADMIN)
+  username  String   @unique
   sportId   String?
   sport     Sport?   @relation(fields: [sportId], references: [id])
   createdAt DateTime @default(now())

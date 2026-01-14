@@ -8,6 +8,7 @@ import AboutPage from '../pages/AboutPage'
 import GuidelinesPage from '../pages/GuidelinesPage'
 import AdminLoginPage from '../pages/admin/AdminLoginPage'
 import AdminDashboardPage from '../pages/admin/AdminDashboardPage'
+import {ProtectedRoute} from '../components/ProtectedRoute';
 
 export default function App() {
   const siteMode = String(import.meta.env.VITE_SITE_MODE ?? 'coming-soon').toLowerCase()
@@ -26,7 +27,16 @@ export default function App() {
       <Route path="/guidelines" element={<GuidelinesPage />} />
 
       <Route path="/admin/login" element={<AdminLoginPage />} />
-      <Route path="/admin" element={<AdminDashboardPage />} />
+
+      {/* Protected Admin Route */}
+      <Route 
+        path="/admin" 
+        element={
+          <ProtectedRoute>
+            <AdminDashboardPage />
+          </ProtectedRoute>
+        } 
+      />
 
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>

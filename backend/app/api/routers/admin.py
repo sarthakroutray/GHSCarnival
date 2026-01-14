@@ -2,10 +2,11 @@ from __future__ import annotations
 
 from typing import Any
 
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Depends
 from pydantic import BaseModel
 
 from app.db.prisma import prisma
+from app.api.utils.security import get_current_user
 
 router = APIRouter(prefix="/admin", tags=["admin"])
 
@@ -21,10 +22,21 @@ class UpsertMatchBody(BaseModel):
 
 
 @router.post("/matches")
-async def create_match(body: UpsertMatchBody) -> dict:
+async def create_match(
+    body: UpsertMatchBody, 
+    current_admin=Depends(get_current_user)
+) -> dict:
     sport = await prisma.sport.find_unique(where={"slug": body.sportSlug})
     if sport is None:
         raise HTTPException(status_code=404, detail="Sport not found")
+
+    if current_admin.role != "SUPER_ADMIN":
+        if current_admin.sportId != sport.id:
+            raise HTTPException(
+                status_code=403, 
+                detail="You do not have permission to manage this sport"
+            )
+
 
     match = await prisma.match.create(
         data={
