@@ -17,29 +17,40 @@ const LandingPage: React.FC = () => {
 
   return (
     <div className="min-h-screen flex justify-center bg-[#F3F3F3]">
-      
+      {/* ANIMATION KEYFRAMES - UPDATED TO PLAY ONCE */}
+      <style>
+        {`
+          @keyframes floatOnce {
+            0% { transform: translateY(20px); opacity: 0; }
+            100% { transform: translateY(0px); opacity: 1; }
+          }
+          .animate-float-once {
+            animation: floatOnce 1.2s ease-out forwards;
+          }
+        `}
+      </style>
+
       {/* MOBILE FRAME */}
       <div
         className="relative w-[390px] min-h-screen overflow-y-auto pb-[120px]"
         style={{
           backgroundImage: "url(/Background.png)",
           backgroundSize: "440px 956px",
-          backgroundRepeat: "repeat",
+          backgroundRepeat: "no-repeat",
           backgroundPosition: "top center",
         }}
       >
-        {/* SOFT OVERLAY */}
-        <div className="absolute inset-0 bg-gradient-to-b from-white/50 via-white/30 to-white/40 pointer-events-none" />
+        {/* SOFT OVERLAY (reduced opacity) */}
+        <div className="absolute inset-0 bg-gradient-to-b from-white/30 via-white/25 to-white/35 pointer-events-none" />
 
         {/* CONTENT */}
-        <div className="relative px-[20px] pt-[24px]">
-          
-          {/* LOGO + TAGLINE (NOW AT TOP) */}
+        <div className="relative z-10 px-[20px] pt-[24px]">
+          {/* LOGO + TAGLINE */}
           <div className="flex flex-col items-center mt-[24px]">
             <img
-              src="/ghs-carnival-logo.png"
+              src="/ghs_carnival_logo.png"
               alt="GHS Carnival Logo"
-              className="h-[90px] object-contain"
+              className="h-[90px] object-contain drop-shadow-md animate-float-once"
             />
 
             <h1
@@ -132,13 +143,26 @@ const LandingPage: React.FC = () => {
           </div>
         </div>
 
+        {/* FLOATING LIVE SCORES CAPSULE */}
+        <div
+          onClick={() => navigate("/live-scores")}
+          className="fixed bottom-[80px] right-[calc(50%-195px+16px)]
+                     px-[18px] h-[48px] rounded-full
+                     bg-[#FF8736] text-white opacity-75 hover:opacity-100
+                     flex items-center gap-[8px]
+                     shadow-lg cursor-pointer
+                     active:scale-95 transition-all z-50"
+        >
+          <FaChartBar className="text-[18px]" />
+          <span className="text-[13px] font-semibold">Live Score</span>
+        </div>
+
         {/* FIXED BOTTOM NAV */}
         <div className="fixed bottom-0 left-1/2 -translate-x-1/2 w-[390px] bg-white border-t py-[10px] z-50">
           <div className="flex justify-around text-[11px] text-gray-500">
             <NavItem icon={<FaHome />} label="Home" active onClick={() => navigate("/")} />
             <NavItem icon={<FaInfoCircle />} label="About" onClick={() => navigate("/about")} />
             <NavItem icon={<FaCrown />} label="Block Captains" onClick={() => navigate("/hostel-blocks")} />
-            <NavItem icon={<FaChartBar />} label="Live Scores" onClick={() => navigate("/live-scores")} />
             <NavItem icon={<FaFileAlt />} label="Guidelines" onClick={() => navigate("/guidelines")} />
             <NavItem icon={<FaUsers />} label="Dev Team" onClick={() => navigate("/teams")} />
           </div>
@@ -172,4 +196,3 @@ const NavItem = ({
 );
 
 export default LandingPage;
-
