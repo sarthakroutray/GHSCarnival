@@ -9,7 +9,7 @@ export default function ComingSoonPage() {
       <div className="relative flex min-h-screen items-center justify-center py-14">
         <div className="mx-auto w-full max-w-2xl text-center font-kdam">
           <img
-            src="/ghs-carnival-logo.png"
+            src="/ghs_carnival_logo.png"
             alt="GHS Carnival"
             className="mx-auto w-[min(520px,92vw)] select-none drop-shadow-[0_8px_20px_rgba(0,0,0,0.12)]"
             draggable={false}

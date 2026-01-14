@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react'
+import NavBar from '../components/NavBar'
 
 type SportKey = 'box-cricket' | 'futsal' | 'basketball' | 'volleyball' | 'table-tennis'
 
@@ -255,6 +256,7 @@ export default function LiveScoresPage() {
           </div>
         </section>
       </main>
+      <NavBar />
     </div>
   )
 }

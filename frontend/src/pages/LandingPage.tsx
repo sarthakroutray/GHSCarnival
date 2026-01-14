@@ -1,3 +1,188 @@
-export default function LandingPage() {
-  return <div data-page="landing" />
-}
+import React from "react";
+import { useNavigate } from "react-router-dom";
+import NavBar from "../components/NavBar";
+import {
+  FaInstagram,
+  FaGlobe,
+  FaClock,
+  FaHome,
+  FaInfoCircle,
+  FaUsers,
+  FaChartBar,
+  FaFileAlt,
+  FaCrown,
+  FaBaseballBall,
+  FaFutbol,
+  FaBasketballBall,
+  FaVolleyballBall,
+  FaTableTennis,
+} from "react-icons/fa";
+
+const LandingPage: React.FC = () => {
+  const navigate = useNavigate();
+
+  return (
+    <div className="min-h-screen flex justify-center bg-[#F3F3F3]">
+      {/* MOBILE FRAME */}
+      <div
+        className="relative w-[390px] min-h-screen overflow-y-auto pb-[120px]"
+        style={{
+          backgroundImage: "url(/Background.png)",
+          backgroundSize: "440px 956px",
+          backgroundRepeat: "repeat",
+          backgroundPosition: "top center",
+        }}
+      >
+        {/* SOFT OVERLAY */}
+        <div className="absolute inset-0 bg-gradient-to-b from-white/50 via-white/30 to-white/40 pointer-events-none" />
+
+        {/* CONTENT */}
+        <div className="relative px-[20px] pt-[24px]">
+          
+
+          {/* 🔥 SPORTS QUICK ACCESS BAR */}
+          <div className="mt-[18px]">
+            <div className="flex gap-[15px] overflow-x-auto no-scrollbar pb-[6px]">
+              <SportTile active icon={<FaBaseballBall />} label="CRICKET" onClick={() => navigate("/live-scores")} />
+              <SportTile icon={<FaFutbol />} label="FUTSAL" onClick={() => navigate("/live-scores")} />
+              <SportTile icon={<FaBasketballBall />} label="BASKETBALL" onClick={() => navigate("/live-scores")} />
+              <SportTile icon={<FaVolleyballBall />} label="VOLLEYBALL" onClick={() => navigate("/live-scores")} />
+              <SportTile icon={<FaTableTennis />} label="TABLE TENNIS" onClick={() => navigate("/live-scores")} />
+            </div>
+          </div>
+
+          {/* LOGO */}
+          <div className="flex justify-center">
+            <img
+              src="/ghs_carnival_logo.png"
+              alt="GHS Carnival Logo"
+              className="h-[100px] object-contain mt-[30vh]"
+            />
+          </div>
+          
+
+          {/* TAGLINE */}
+          <h1
+            className="text-[#232165] text-center font-medium mt-[12px]"
+            style={{
+              fontFamily: "'Kdam Thmor Pro', sans-serif",
+              fontSize: "20px",
+              paddingBottom: "50vh",
+            }}
+          >
+            Games, Glory & Hostel Stories
+          </h1>
+
+          {/* HERO IMAGE */}
+          <div className="mt-[20px] flex justify-center">
+            <img
+              src="/ghs.png"
+              alt="GHS Carnival"
+              className="w-[367px] h-[237px] object-cover rounded-[22px] shadow-lg"
+            />
+          </div>
+
+          {/* DOTS */}
+          <div className="flex justify-center gap-[6px] mt-[10px]">
+            <span className="w-[6px] h-[6px] rounded-full bg-[#FF8736]" />
+            <span className="w-[6px] h-[6px] rounded-full bg-gray-300" />
+            <span className="w-[6px] h-[6px] rounded-full bg-gray-300" />
+          </div>
+
+          {/* TITLE */}
+          <h2
+            className="mt-[18px] text-center text-[#FF8736] text-[26px]"
+            style={{ fontFamily: "'Kdam Thmor Pro', sans-serif" }}
+          >
+            The Annual Carnival
+          </h2>
+
+          {/* DESCRIPTION */}
+          <p
+            className="mt-[12px] text-center text-[14px] leading-[22px] text-[#2F2F2F]"
+            style={{ fontFamily: "'Kdam Thmor Pro', sans-serif" }}
+          >
+            Returning back in 2026, the annual GHS Carnival is better than ever,
+            with jaw-dropping cultural performances and thrilling sporting events
+            by our very own students.
+          </p>
+
+          
+
+          {/* EVENT GALLERY */}
+          <h3 className="mt-[28px] text-center text-[#FF8736] text-[26px] font-semibold">
+            Event Gallery
+          </h3>
+
+          <div className="mt-[14px] grid grid-cols-3 gap-[10px]">
+            <div className="h-[72px] rounded-[12px] bg-gray-300" />
+            <div className="h-[72px] rounded-[12px] bg-gray-300" />
+            <div className="h-[72px] rounded-[12px] bg-gray-300" />
+          </div>
+
+          {/* QUICK LINKS */}
+          <div className="mt-[28px] bg-white rounded-[20px] shadow-lg px-[18px] py-[18px]">
+            <h4 className="text-[18px] font-bold mb-[14px]">Quick Links</h4>
+
+            <div className="space-y-[14px] text-[14px] font-semibold">
+              <a
+                href="https://www.instagram.com/ghs.carnival_muj/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-[12px] hover:text-[#FF8736]"
+              >
+                <FaInstagram className="text-[20px] text-pink-500" />
+                <span>GHS Carnival’s Official Page</span>
+              </a>
+
+              <div
+                onClick={() => navigate("/guidelines")}
+                className="flex items-center gap-[12px] cursor-pointer hover:text-[#FF8736]"
+              >
+                <FaGlobe className="text-[20px] text-blue-500" />
+                <span>Guidelines / Rulebook</span>
+              </div>
+
+              <div 
+                onClick={() => navigate("/live-scores")}
+                className="flex items-center gap-[12px] cursor-pointer hover:text-[#FF8736]"
+              >
+                <FaClock className="text-[20px] text-yellow-500" />
+                <span>Cultural Events Updates</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <NavBar />
+      </div>
+    </div>
+  );
+};
+
+/* 🔹 SPORT TILE COMPONENT (With Hover & Transitions) */
+const SportTile = ({
+  icon,
+  label,
+  active = false,
+  onClick,
+}: {
+  icon: React.ReactNode;
+  label: string;
+  active?: boolean;
+  onClick?: () => void;
+}) => (
+  <div
+    onClick={onClick}
+    className={`min-w-[69px] h-[69px] rounded-[18px] flex flex-col items-center justify-center text-center cursor-pointer transition-all duration-200 active:scale-95 ${
+      active
+        ? "bg-gradient-to-br from-[#FFB703] to-[#FF8736] shadow-md text-white"
+        : "bg-[#E6E6E6] text-[#2F2F2F] hover:text-[#FF8736] hover:bg-[#efefef]"
+    }`}
+  >
+    <div className="text-[26px]">{icon}</div>
+    <span className="mt-[6px] text-[11px] font-semibold">{label}</span>
+  </div>
+);
+
+export default LandingPage;

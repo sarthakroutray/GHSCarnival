@@ -1,6 +1,7 @@
 import { useState } from "react";
 
 import Header from "../components/TeamsPage/Header";
+import NavBar from "../components/NavBar";
 import TeamTabs from "../components/TeamsPage/teamtabs";
 import MemberCard from "../components/TeamsPage/MemberCard";
 import ScrollToTop from "../components/TeamsPage/scrollup";
@@ -84,7 +85,7 @@ export default function TeamsPage() {
           </div>
       </div>
   </div>
-
+  <NavBar />
   </>
   )
 }
