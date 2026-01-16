@@ -35,6 +35,7 @@ export default function ScrollToTop() {
         bottom-24
         mb-3
         right-3
+        md:right-12
         z-50
         h-12
         w-12

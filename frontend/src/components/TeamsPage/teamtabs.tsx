@@ -7,12 +7,12 @@ type TeamTabsProps = {
 };
 
 const tabs: { id: TabId; label: string; activeColor: string }[] = [
-  { id: "all", label: "All", activeColor:"bg-gray-800 text-white"},
-  { id: "core", label: "Core" , activeColor:"bg-[#feb947] text-white"},
-  { id: "tech", label: "Tech", activeColor:"bg-[#e06734] text-white" },
-  { id: "events", label: "Events" , activeColor:"bg-[#cc5743] text-white"},
-  { id: "design", label: "Design" , activeColor:"bg-[#b94d4e] text-white"},
-  { id: "marketing", label: "Marketing", activeColor:"bg-[#9b4263] text-white" },
+  { id: "all", label: "All", activeColor:"bg-[#febc88] text-white"},
+  { id: "core", label: "Core" , activeColor:"bg-[#e7b39f] text-white"},
+  { id: "tech", label: "Tech", activeColor:"bg-[#cfa7b8]   text-white" },
+  { id: "events", label: "Events" , activeColor:"bg-[#bc9ecd] text-white"},
+  { id: "design", label: "Design" , activeColor:"bg-[#a594e4] text-white"},
+  { id: "marketing", label: "Marketing", activeColor:"bg-[#8e89fd] text-white" },
 ];
 
 export default function TeamTabs({ onTabChange }: TeamTabsProps) {
@@ -24,14 +24,15 @@ export default function TeamTabs({ onTabChange }: TeamTabsProps) {
   };
 
   return (
-    <div className="w-full mb-5">
-      <div className="flex flex-nowrap overflow-x-auto gap-4 px-0 py-1 mb-10">
+    <div className="w-full mb-5 ">
+      <div className="flex flex-nowrap overflow-x-auto [&::-webkit-scrollbar]:hidden gap-4 md:gap-20 px-0 py-1 mb-10 md:mb-24 md:justify-center
+    md:overflow-visible">
         {tabs.map((tab) => (
           <button
             key={tab.id}
             onClick={() => handleClick(tab.id)}
             className={`
-              px-4 py-2 rounded-full whitespace-nowrap transition-colors
+              px-4 py-2 rounded-full whitespace-nowrap transition-colors text-sm md:text-base md:px-5 md:py-2.5 md:text-lg
         ${activeTab===tab.id ? tab.activeColor : "bg-[#C0C0C0] text-gray-800"}
             `}
           >

@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from prisma import Prisma
+from .prisma_client import Prisma
 
 prisma = Prisma()
 

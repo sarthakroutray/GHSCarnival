@@ -1,6 +1,9 @@
 import {teamColors} from "../../constants/TeamsPage/teamColors";
-import { FaLinkedin, FaEnvelope } from "react-icons/fa";
-  
+import { FaLinkedin, FaEnvelope} from "react-icons/fa";
+
+// import {Linkedin} from 'lucide-react';
+
+
 
 type Team =
   | "all"
@@ -18,6 +21,7 @@ type Member = {
   linkedin: string;
   email: string;
   image:string;
+  
 };
 
 type MemberCardProps = {
@@ -35,9 +39,13 @@ function MemberCard({ member, activeTab }:MemberCardProps) {
   return (
     
   <>
+
+  
     <div className="h-[420px]
+    
       relative
       w-[250px]
+      md:w-[270px]
       mx-auto
       rounded-2xl
       bg-white
@@ -49,19 +57,28 @@ function MemberCard({ member, activeTab }:MemberCardProps) {
       flex-shrink-0
       overflow-hidden
       ">
-      
+
 
       <div className="relative z-10 flex flex-col items-center text-center">
       <h3 className="text-2xl font-kdam text-transform: uppercase">{member.name}</h3>
+
+      <div>
+    {activeTab==="all" && <p  className={`
+        font-kdam transition-colors text-transform: uppercase
+        ${activeTab==="all"? teamColors[member.team] : "text-gray-500"}
+      `}> {member.team} </p>}
+  </div>
+
        <p
       className={`
-        font-kdam transition-colors text-transform: uppercase
+        font-kdam transition-colors duration-0 text-transform: uppercase
         ${activeTab===member.team ? teamColors[member.team] : "text-gray-500"}
       `}
     >
       {member.role}
     </p>
 
+  
 
     {/* Icons row */}
       <div className="flex gap-5 mt-4">
@@ -88,6 +105,9 @@ function MemberCard({ member, activeTab }:MemberCardProps) {
         </a>
 
         
+        
+
+        
       </div>
       </div>
 
@@ -99,7 +119,7 @@ function MemberCard({ member, activeTab }:MemberCardProps) {
             bottom-0
             left-1/2
             -translate-x-1/2
-            w-[90%]
+            w-[85%]
             object-contain
             
             pointer-events-none

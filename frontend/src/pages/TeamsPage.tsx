@@ -39,7 +39,7 @@ export default function TeamsPage() {
   <div data-page="teams" className="relative min-h-screen w-full overflow-x-hidden">
        
       <div
-          className="fixed inset-0 -z-10 bg-no-repeat bg-center bg-cover"
+          className="fixed inset-0 -z-10 bg-no-repeat bg-center bg-cover md:bg-size-cover md:bg-bottom"
           style={{
             backgroundImage: `url(${bg})`,
             minHeight: "100vh",
@@ -51,7 +51,7 @@ export default function TeamsPage() {
 
           <div className="p-3 flex flex-col items-center">
             <h2
-              className="text-[30px] font-kdam mb-7 text-center
+              className="text-[30px] md:text-[80px] font-kdam mb-7 md:mb-14 md:mt-10 text-center
               bg-gradient-to-r
               from-[#FFBE86]
               to-[#8D89FF]
@@ -62,16 +62,17 @@ export default function TeamsPage() {
             </h2>
 
 
-            <div className="w-full max-w-sm">
+            <div className="w-full max-w-sm md:max-w-5xl">
 
             <TeamTabs onTabChange={setActiveTab} />
 
-            </div>
+           
+            
             
 
 
-            <div className="flex flex-col items-center">
-              <div className="w-full max-w-sm min-h-[80vh] space-y-14">
+            {/* <div className="flex flex-col items-center "> */}
+              <div className="flex flex-col w-full max-w-sm min-h-[80vh] space-y-14 md:max-w-5xl md:grid md:grid-cols-3 md:gap-20 md:justify-items-center md:space-y-0">
                 {filteredMembers.map((member) => (
                   <MemberCard
                     key={member.id}
@@ -80,11 +81,12 @@ export default function TeamsPage() {
                   />
                 ))}
               </div>
+               </div>
 
             </div>
           </div>
       </div>
-  </div>
+  {/* </div> */}
   <NavBar />
   </>
   )
