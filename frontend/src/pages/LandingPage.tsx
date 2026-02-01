@@ -117,25 +117,25 @@ const LandingPage: React.FC = () => {
                 href="https://www.instagram.com/ghs.carnival_muj/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-[12px] md:gap-[16px] hover:text-[#FF8736] transition-colors"
+                className="flex items-center gap-[10px] md:gap-[12px] hover:text-[#FF8736] transition-colors"
               >
-                <FaInstagram className="text-[20px] md:text-[26px] lg:text-[32px] text-pink-500" />
-                <span>GHS Carnival’s Official Page</span>
+                <FaInstagram className="text-[16px] md:text-[20px] lg:text-[24px] text-pink-500" />
+                <span>GHS Carnival's Official Page</span>
               </a>
 
               <div
                 onClick={() => navigate("/guidelines")}
-                className="flex items-center gap-[12px] md:gap-[16px] cursor-pointer hover:text-[#FF8736] transition-colors"
+                className="flex items-center gap-[10px] md:gap-[12px] cursor-pointer hover:text-[#FF8736] transition-colors"
               >
-                <FaGlobe className="text-[20px] md:text-[26px] lg:text-[32px] text-blue-500" />
+                <FaGlobe className="text-[16px] md:text-[20px] lg:text-[24px] text-blue-500" />
                 <span>Guidelines / Rulebook</span>
               </div>
 
               <div
                 onClick={() => navigate("/live-scores")}
-                className="flex items-center gap-[12px] md:gap-[16px] cursor-pointer hover:text-[#FF8736] transition-colors"
+                className="flex items-center gap-[10px] md:gap-[12px] cursor-pointer hover:text-[#FF8736] transition-colors"
               >
-                <FaClock className="text-[20px] md:text-[26px] lg:text-[32px] text-yellow-500" />
+                <FaClock className="text-[16px] md:text-[20px] lg:text-[24px] text-yellow-500" />
                 <span>Cultural Events Updates</span>
               </div>
             </div>
