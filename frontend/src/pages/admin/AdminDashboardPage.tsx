@@ -115,6 +115,7 @@ export default function AdminDashboard() {
       console.error('Logout failed:', err);
     } finally {
       localStorage.removeItem('admin_user');
+      localStorage.removeItem('csrf_token');
       navigate('/ghs-control-panel-2026/login', { replace: true });
     }
   };

@@ -46,10 +46,14 @@ export interface Announcement {
   updatedAt: string;
 }
 
-// Helper to get CSRF token from cookie
+// Helper to get CSRF token from cookie or localStorage
 function getCSRFToken(): string | null {
+  // Try to read from cookie first
   const match = document.cookie.match(/csrf_token=([^;]+)/);
-  return match ? match[1] : null;
+  if (match) return match[1];
+  
+  // Fallback to localStorage for cross-origin scenarios
+  return localStorage.getItem('csrf_token');
 }
 
 async function fetchAPI<T>(endpoint: string, options?: RequestInit): Promise<T> {

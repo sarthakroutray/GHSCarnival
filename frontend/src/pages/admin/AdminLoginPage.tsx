@@ -30,8 +30,9 @@ export default function AdminLoginPage() {
       const data = await api.admin.login(email, password);
       
       // Cookies are automatically set by the browser
-      // Store user info if needed
+      // Store user info and CSRF token in localStorage as backup for cross-origin
       localStorage.setItem('admin_user', JSON.stringify(data.user));
+      localStorage.setItem('csrf_token', data.csrf_token);
       
       // Navigate to admin dashboard
       navigate('/ghs-control-panel-2026', { replace: true });
