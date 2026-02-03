@@ -27,6 +27,7 @@ export default function MatchHistoryPage() {
   const [selectedSport, setSelectedSport] = useState<string | null>(null);
   const [completedMatches, setCompletedMatches] = useState<Match[]>([]);
   const [loading, setLoading] = useState(true);
+  const [loadingMatches, setLoadingMatches] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
@@ -56,6 +57,7 @@ export default function MatchHistoryPage() {
 
   async function loadCompletedMatches(sportSlug: string) {
     try {
+      setLoadingMatches(true);
       setError(null);
       const { items } = await api.getMatches({ 
         sport_slug: sportSlug,
@@ -67,6 +69,8 @@ export default function MatchHistoryPage() {
     } catch (err) {
       console.error('Failed to load match history:', err);
       setError('Failed to load match history');
+    } finally {
+      setLoadingMatches(false);
     }
   }
 
@@ -142,7 +146,12 @@ export default function MatchHistoryPage() {
             {currentSport?.name.toUpperCase()} - COMPLETED MATCHES
           </h2>
 
-          {completedMatches.length === 0 ? (
+          {loadingMatches ? (
+            <div className="text-center py-12 bg-white rounded-2xl border border-gray-200">
+              <div className="inline-block animate-spin rounded-full h-10 w-10 border-b-2 border-rose-500 mb-3"></div>
+              <p className="text-gray-600">Loading match history...</p>
+            </div>
+          ) : completedMatches.length === 0 ? (
             <div className="text-center py-12 bg-white rounded-2xl border border-gray-200">
               <div className="text-4xl mb-3">🏆</div>
               <p className="text-lg text-gray-600 mb-2">No completed matches yet</p>

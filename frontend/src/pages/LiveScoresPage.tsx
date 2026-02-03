@@ -28,6 +28,7 @@ export default function LiveScoresPage() {
   const [liveMatch, setLiveMatch] = useState<Match | null>(null);
   const [upcomingMatches, setUpcomingMatches] = useState<Match[]>([]);
   const [loading, setLoading] = useState(true);
+  const [loadingMatches, setLoadingMatches] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
@@ -89,6 +90,8 @@ export default function LiveScoresPage() {
 
   async function loadMatches(sportSlug: string) {
     try {
+      setLoadingMatches(true);
+      setError(null);
       const { items: allMatches } = await api.getMatches({ 
         sport_slug: sportSlug,
         limit: 50
@@ -102,6 +105,8 @@ export default function LiveScoresPage() {
     } catch (err) {
       console.error('Failed to load matches:', err);
       setError('Failed to load matches');
+    } finally {
+      setLoadingMatches(false);
     }
   }
 
@@ -167,7 +172,12 @@ export default function LiveScoresPage() {
         </div>
 
         <main className="p-4 min-[900px]:max-w-[560px] min-[900px]:mx-auto min-[1280px]:max-w-[680px]">
-          {liveMatch ? (
+          {loadingMatches ? (
+            <div className="text-center py-12">
+              <div className="inline-block animate-spin rounded-full h-10 w-10 border-b-2 border-rose-500 mb-3"></div>
+              <p className="text-gray-600">Loading matches...</p>
+            </div>
+          ) : liveMatch ? (
             <>
               <h2 className="text-xs uppercase tracking-wider text-gray-500 mt-[22px] mb-2.5">
                 NOW PLAYING: {currentSport?.name.toUpperCase()}
