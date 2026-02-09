@@ -7,6 +7,7 @@ import TeamsPage from '../pages/TeamsPage'
 import HostelBlocksPage from '../pages/HostelBlocksPage'
 import AboutPage from '../pages/AboutPage'
 import GuidelinesPage from '../pages/GuidelinesPage'
+import SponsorsPage from '../pages/SponsorsPage'
 import AdminLoginPage from '../pages/admin/AdminLoginPage'
 import AdminDashboardPage from '../pages/admin/AdminDashboardPage'
 import {ProtectedRoute} from '../components/ProtectedRoute';
@@ -33,6 +34,7 @@ export default function App() {
           <Route path="/hostel-blocks" element={<HostelBlocksPage />} />
           <Route path="/about" element={<AboutPage />} />
           <Route path="/guidelines" element={<GuidelinesPage />} />
+          <Route path="/sponsors" element={<SponsorsPage />} />
 
           <Route path="/ghs-control-panel-2026/login" element={<AdminLoginPage />} />
 

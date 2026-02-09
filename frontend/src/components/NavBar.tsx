@@ -6,6 +6,7 @@ import {
   FaCrown,
   FaChartBar,
   FaFileAlt,
+  FaHandshake,
   FaUsers,
 } from "react-icons/fa";
 
@@ -42,10 +43,10 @@ const NavBar: React.FC = () => {
           onClick={() => navigate("/live-scores")}
         />
         <NavItem
-          icon={<FaFileAlt />}
-          label="Guidelines"
-          active={location.pathname === "/guidelines"}
-          onClick={() => navigate("/guidelines")}
+          icon={<FaHandshake />}
+          label="Sponsors"
+          active={location.pathname === "/sponsors"}
+          onClick={() => navigate("/sponsors")}
         />
         <NavItem
           icon={<FaUsers />}
