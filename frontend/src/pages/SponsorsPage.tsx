@@ -79,7 +79,7 @@ const SponsorsPage: React.FC = () => {
       {/* Background Layer - Same as other pages */}
       <div 
         className="fixed inset-0 -z-10 bg-no-repeat 
-                   bg-[url('./Background.png')] 
+                   bg-[url('/Background.png')]
                    bg-center bg-cover md:bg-fixed"
       />
 
